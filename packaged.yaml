@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'helloworld-sam
+
+  Sample SAM Template for helloworld-sam
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://helloworld-sam-fcaspani/c6ce8fa8b5a97dd022ecd006536eb5a4
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  HelloWorldFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn
+  HelloWorldFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunctionRole
+      - Arn
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: helloworld-sam
+    Description: hello world
+    Author: user1
+    SpdxLicenseId: Apache-2.0
+    ReadmeUrl: s3://helloworld-sam-fcaspani/a253ad08e54a62045bc9e149efb0a696
+    Labels:
+    - tests
+    HomePageUrl: https://github.com/fcaspani01/helloworld-sam
+    SemanticVersion: '0.0.1'
+    SourceCodeUrl: https://github.com/fcaspani01/helloworld-sam
